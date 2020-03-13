@@ -18,7 +18,7 @@ $quarterlyData = $data[1];
 $yearlyData = $data[2];
 
 file_put_contents('county.json', json_encode($data)); 
-echo json_encode($monthlyData);
+echo json_encode($data);
 
 /**
  * Returns an assoc array with countyID and month-year-string (in the format 'Jan-2017') as keys.
@@ -80,6 +80,8 @@ function getMonthlyData($rows)
             $monthString = getMonthYearString($row['month'], substr($row['year'],-2));
             $monthlyData[$i]['group'] = $monthString;
             $monthlyData[$i]['value'] = $row['numerator'] ;
+            $monthlyData[$i]['sup'] = $row['issuppressed'] ;
+            
             $i++;
         }
     }
@@ -101,6 +103,7 @@ function getQuarterlyData($rows)
         {
             $quarterlyData[$i]['group'] = 'Q'. $row['quarter'] . substr($row['year'], -2);
             $quarterlyData[$i]['value'] = $row['numerator'] ;
+            $quarterlyData[$i]['sup'] = $row['issuppressed'] ;
             $i++;
         }
     }
@@ -121,6 +124,7 @@ function getYearlyData($rows)
         {
             $yearlyData[$i]['group'] = $row['year'];
             $yearlyData[$i]['value'] = $row['numerator'] ;
+            $yearlyData[$i]['sup'] = $row['issuppressed'] ;
             $i++;
         }
     }

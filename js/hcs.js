@@ -1,32 +1,66 @@
+var hcsChartData = {};
+
 $( document ).ready(function() {
     console.log( "ready!" );
     
-	var data1 = [];
-	var data2 = [];
-	var data3 = [];
-	
-	  var xhr = new XMLHttpRequest();
-	  xhr.open("POST", '../db.php', true);
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", '../db.php', true);
 
 	  xhr.onreadystatechange = function() { // Call a function when the state changes.
 	      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+	    	  var data = JSON.parse(xhr.response);
+	    	  // Populate the global chartData variable.
+	    	  hcsChartData.monthlyData = data[0];
+	    	  hcsChartData.quarterlyData = data[1];
+	    	  hcsChartData.yearlyData = data[2];
+	    	  
 	          // Request finished. Do processing here.
 	    	  console.log("request is complete!");
 	    	  // var countyData = JSON.parse(xhr.response);
 	    		d3.json("county.json",function(err,data) {
-	    			  console.log(data);
-	    			  data1 = data[0];
-	    			  update(data1,transition=false);
+	    			  displayChart(data);
+	    			  // update(data1,transition=false);
 	    		});
+	    		
+	    		var data = xhr.response;
 	      }
 	  }
+	  
 	  var formData = new FormData();
 	  formData.append("countyID", '0115');
 
 	  xhr.send(formData);
 
+	  // Set up button click handlers.
+	  document.getElementById('monthly').onclick = displayMonthlyData;
+	  document.getElementById('quarterly').onclick = displayQuarterlyData;
+	  document.getElementById('yearly').onclick = displayYearlyData;
+
+	  
 	  
 });
+
+
+function displayChart(data)
+{
+	update(data[0],transition=false);
+}
+
+function displayMonthlyData()
+{
+	update(hcsChartData.monthlyData,transition=false);
+}
+
+function displayQuarterlyData()
+{
+	update(hcsChartData.quarterlyData,transition=false);
+}
+
+function displayYearlyData()
+{
+	update(hcsChartData.yearlyData,transition=false);
+}
+
 
 
 
@@ -35,7 +69,7 @@ $( document ).ready(function() {
 		    height = 400 - margin.top - margin.bottom;
 	
 		  // append the svg object to the body of the page
-		var svg = d3.select("#my_dataviz")
+		var svg = d3.select("#hcsChart")
 		    .append("svg")
 		    .attr("width", width + margin.left + margin.right)
 		    .attr("height", height + margin.top + margin.bottom)
