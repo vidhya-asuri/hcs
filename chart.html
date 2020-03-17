@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Healing Communities Study </title>
     <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
   </head>
   <body>
 <style>
@@ -41,8 +43,12 @@
 
 	<div class="grid-x grid-padding-x grid-margin-x">
 	  <div class="cell small-6">
+	  <canvas id="myChart" width="400" height="400"></canvas>
+	  	
 	  	<div id="hcsChart" >
+	  	
 		</div>
+		
 		<div class="button-group">
 		  <a id="monthly" class="button">Monthly</a>
 		  <a id="quarterly" class="button">Quarterly</a>
@@ -54,6 +60,7 @@
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
     <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"> </script>
     <script src="js/hcs.js"></script>
     <script>
       $(document).foundation();
